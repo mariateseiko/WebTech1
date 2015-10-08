@@ -15,7 +15,6 @@ public class LogoutCommand implements Command {
             throw new CommandException("Validation Exception.");
         }
 
-
         LogoutResponse response = new LogoutResponse();
         response.setResultMessage("Successfully logged out");
         response.setGuestUser();

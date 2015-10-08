@@ -37,9 +37,9 @@ public class AddNewBookCommand implements Command {
         // create response
         NewBookResponse response = new NewBookResponse();
         if (result) {
-            response.setResultMessage("All OK.");
+            response.setResultMessage("Book was successfully added to the repository");
         } else {
-            response.setErrorMessage("Can't add the book.");
+            response.setErrorMessage("Failed to add new book");
         }
         return response;
     }

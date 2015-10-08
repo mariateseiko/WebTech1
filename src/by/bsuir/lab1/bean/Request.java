@@ -8,6 +8,7 @@ import by.bsuir.lab1.entity.UserRole;
 public class Request {
     private String commandName;
     private UserRole userRole;
+
     public String getCommandName() {
         return commandName;
     }
@@ -17,4 +18,6 @@ public class Request {
     }
 
     public UserRole getRole() { return userRole; }
+
+    public void setRole(UserRole role) { userRole = role; }
 }

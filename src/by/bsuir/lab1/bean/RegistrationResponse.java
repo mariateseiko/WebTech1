@@ -13,6 +13,4 @@ public class RegistrationResponse extends Response {
     public void setResultMessage(String resultMessage) {
         this.resultMessage = resultMessage;
     }
-
-
 }

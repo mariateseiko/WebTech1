@@ -13,7 +13,10 @@ public class CommandHelper {
 
     public CommandHelper(){
         commands.put(CommandName.ADD_NEW_BOOK, new AddNewBookCommand());
-       // commands.put(CommandName.LOGIN, new LoginCommand());
+        commands.put(CommandName.LOGIN, new LoginCommand());
+        commands.put(CommandName.REGISTER, new RegisterUserCommand());
+        commands.put(CommandName.LOGOUT, new LogoutCommand());
+        commands.put(CommandName.LIST_ALL_BOOKS, new ListAllBooksCommand());
     }
 
     public Command getCommand(String commandName){

@@ -6,13 +6,17 @@ import by.bsuir.lab1.entity.User;
  * Created by Maria Teseiko on 03.10.2015.
  */
 public class LoginRequest extends Request {
-    private User user;
+    private User userInfo = new User();
 
-    public void setUser(String login, String password) {
-        user = new User(login, password.hashCode());
+    public void setUserLogin(String login){
+        userInfo.setLogin(login);
+    }
+
+    public void setUserPassword(String password){
+        userInfo.setPasswordHash(password);
     }
 
     public User getUser() {
-        return user;
+        return userInfo;
     }
 }

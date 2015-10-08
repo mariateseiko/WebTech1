@@ -3,7 +3,6 @@ package by.bsuir.lab1.service;
 import by.bsuir.lab1.dao.DaoException;
 import by.bsuir.lab1.dao.DaoFactory;
 import by.bsuir.lab1.dao.FindDao;
-import by.bsuir.lab1.dao.ModificationDao;
 import by.bsuir.lab1.entity.Book;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
 public class BookFindService  {
     private BookFindService() {}
 
-    public List<Book> findAllBooksService() throws ServiceException {
+    public static List<Book> listAllBooksService() throws ServiceException {
         List<Book> books;
         DaoFactory daoFactory = DaoFactory.getDaoFactory();
         FindDao findDao = daoFactory.getFindDao();
@@ -26,7 +25,7 @@ public class BookFindService  {
         return books;
     }
 
-    public List<Book> findBookByAuthorService(String author) throws ServiceException {
+    public static List<Book> findBookByAuthorService(String author) throws ServiceException {
         List<Book> books;
         DaoFactory daoFactory = DaoFactory.getDaoFactory();
         FindDao findDao = daoFactory.getFindDao();
@@ -38,7 +37,7 @@ public class BookFindService  {
         return books;
     }
 
-    public List<Book> findBookByTitleService(String title) throws ServiceException {
+    public static List<Book> findBookByTitleService(String title) throws ServiceException {
         List<Book> books;
         DaoFactory daoFactory = DaoFactory.getDaoFactory();
         FindDao findDao = daoFactory.getFindDao();

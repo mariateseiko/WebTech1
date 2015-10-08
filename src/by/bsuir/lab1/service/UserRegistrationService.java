@@ -15,10 +15,12 @@ public class UserRegistrationService {
         DaoFactory daoFactory = DaoFactory.getDaoFactory();
         UserDao userDao = daoFactory.getUserDao();
         try {
-            userDao.registerUser(user);
+            if (userDao.registerUser(user))
+                return true;
+            else return false;
         } catch (DaoException e) {
             throw new ServiceException("Service exception", e);
         }
-        return true;
+
     }
 }

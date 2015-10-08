@@ -2,13 +2,13 @@ package by.bsuir.lab1.dao.file;
 
 import by.bsuir.lab1.dao.DaoException;
 import by.bsuir.lab1.dao.UserDao;
-import by.bsuir.lab1.entity.Book;
 import by.bsuir.lab1.entity.User;
 import by.bsuir.lab1.entity.UserRole;
 import by.bsuir.lab1.resource.ResourceManager;
 
 import java.io.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Maria Teseiko on 10.09.2015.
@@ -18,27 +18,22 @@ public class FileUserDao implements UserDao {
     private final static String usersFile = ResourceManager.getInstance().getProperty("usersFile");
     private FileUserDao(){}
 
+
     public static FileUserDao getInstance() { return instance; }
 
 
     @Override
-    public boolean authorizeUser(User user) throws DaoException {
+    public UserRole authorizeUser(User user) throws DaoException {
         Map<String, User> users;
-        users =(HashMap<String, User>) getAllUsers();
-        /*Iterator<User> iterator = users.iterator();
-        while(iterator.hasNext()) {
-            User nextUser = iterator.next();
-            if (nextUser.getLogin().equals(user.getLogin()))
-
-        }*/
+        users = getAllUsers();
         User userInfo = users.get(user.getLogin());
         if (userInfo != null) {
-            if (userInfo.getPasswordHash().equals(user.getPasswordHash())){
+            if (userInfo.getPasswordHash() == user.getPasswordHash()){
                 user = userInfo;
-                return true;
+                return userInfo.getRole();
             }
         }
-        return false;
+        return null;
     }
 
     @Override
@@ -55,29 +50,46 @@ public class FileUserDao implements UserDao {
     }
 
     private Map<String, User> getAllUsers() throws DaoException{
-        Map<String, User> result;
+        HashMap<String, User> result = new HashMap<>();
         try {
-            FileInputStream fileInputStream = new FileInputStream(usersFile);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            result = (HashMap<String, User>)objectInputStream.readObject();
+            File file = new File(usersFile);
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] userInfo = line.split(" ");
+                String login = userInfo[0];
+                String email = userInfo[1];
+                int passwordHash = Integer.parseInt(userInfo[2]);
+                UserRole role = UserRole.valueOf(userInfo[3]);
+                User user = new User(login, passwordHash, email, role);
+                result.put(login, user);
+            }
         } catch(IOException e){
-            throw new DaoException("Error reading books from "+usersFile, e);
-        } catch(ClassNotFoundException e){
-            throw new DaoException("Class not found", e);
+            throw new DaoException("Error reading users from "+usersFile, e);
         }
         return result;
     }
 
-
     private  void saveAllUsers(Map<String, User> users) throws DaoException{
-        Map<String, User> result;
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(usersFile);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(users);
-        } catch(IOException e) {
-            throw new DaoException("Error reading books from " + usersFile, e);
-        }
+            File file = new File(usersFile);
+            FileWriter fileWriter = new FileWriter(file);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
+            for(Map.Entry<String, User> entry : users.entrySet()) {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append(entry.getValue().getLogin());
+                stringBuilder.append(" " + entry.getValue().getEmail());
+                stringBuilder.append(" " + entry.getValue().getPasswordHash());
+                stringBuilder.append(" " + entry.getValue().getRole());
+                bufferedWriter.write(stringBuilder.toString());
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.flush();
+
+        } catch(IOException e) {
+            throw new DaoException("Error saving books" + usersFile, e);
+        }
     }
 }

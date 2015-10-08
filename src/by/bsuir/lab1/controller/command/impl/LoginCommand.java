@@ -1,6 +1,9 @@
 package by.bsuir.lab1.controller.command.impl;
 
-import by.bsuir.lab1.bean.*;
+import by.bsuir.lab1.bean.LoginRequest;
+import by.bsuir.lab1.bean.LoginResponse;
+import by.bsuir.lab1.bean.Request;
+import by.bsuir.lab1.bean.Response;
 import by.bsuir.lab1.controller.command.Command;
 import by.bsuir.lab1.controller.command.CommandException;
 import by.bsuir.lab1.entity.UserRole;
@@ -20,7 +23,7 @@ public class LoginCommand implements Command {
 
         // call service
         LoginRequest loginRequest = (LoginRequest) request;
-        boolean result = false;
+        UserRole result;
         try {
             result = UserAuthorizationService
                     .loginUserService(loginRequest.getUser());
@@ -30,8 +33,12 @@ public class LoginCommand implements Command {
 
         // create response
         LoginResponse response = new LoginResponse();
-        if (result) {
+        if (result == UserRole.ADMIN) {
+            response.setResultMessage("Successfully logged in as admin");
+            response.setRole(UserRole.ADMIN);
+        } else if (result == UserRole.USER) {
             response.setResultMessage("Successfully logged in");
+            response.setRole(UserRole.USER);
         } else {
             response.setErrorMessage("Authorization failed");
         }

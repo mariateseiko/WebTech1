@@ -12,15 +12,15 @@ import by.bsuir.lab1.entity.UserRole;
 public class UserAuthorizationService {
     private UserAuthorizationService() {}
 
-    public static boolean loginUserService(User user) throws ServiceException{
+    public static UserRole loginUserService(User user) throws ServiceException{
         DaoFactory daoFactory = DaoFactory.getDaoFactory();
         UserDao userDao = daoFactory.getUserDao();
         try {
-            userDao.authorizeUser(user);
+            UserRole role = userDao.authorizeUser(user);
+            return role;
         } catch (DaoException e) {
             throw new ServiceException("Service exception", e);
         }
-        return true;
     }
 
     public static boolean logoutUserService(User user) {

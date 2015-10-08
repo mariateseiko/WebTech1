@@ -19,12 +19,12 @@ public class FileFindDao implements FindDao {
     private final static String booksFile = ResourceManager.getInstance().getProperty("booksFile");
 
     private FileFindDao(){}
-
+    private FileCommonDao commonDao = FileCommonDao.getInstance();
     public static FileFindDao getInstance() { return instance; }
 
     @Override
     public List<Book> findBookByTitle(String title) throws DaoException{
-        List<Book> list = getAllBooks();
+        List<Book> list = commonDao.getAllBooks();
         List<Book> result = new ArrayList<>();
         for(Book book: list){
             if (book.getTitle() == title)
@@ -37,7 +37,7 @@ public class FileFindDao implements FindDao {
 
     @Override
     public List<Book> findBookByAuthor(String author) throws DaoException{
-        List<Book> list = getAllBooks();
+        List<Book> list = commonDao.getAllBooks();
         List<Book> result = new ArrayList<>();
         for(Book book: list){
             if (book.getTitle() == author)
@@ -55,22 +55,9 @@ public class FileFindDao implements FindDao {
 
     @Override
     public List<Book> findAllBooks() throws DaoException{
-       return getAllBooks();
+       return commonDao.getAllBooks();
     }
 
-    private List<Book> getAllBooks() throws DaoException{
-        ArrayList<Book> result;
-        try {
-            FileInputStream fileInputStream = new FileInputStream(booksFile);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            result = (ArrayList<Book>)objectInputStream.readObject();
-        }catch(IOException e){
-            throw new DaoException("Error reading books from "+booksFile, e);
-        }catch(ClassNotFoundException e){
-            throw new DaoException("Class not found", e);
-        }
-        return result;
-    }
 
 
 }
