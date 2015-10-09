@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Maria Teseiko on 08.10.2015.
  */
-public class FindBookResponse extends Response {
+public class FindBooksResponse extends Response {
     private List<Book> books;
     private String resultMessage;
 

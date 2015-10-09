@@ -1,2 +1,2 @@
 tessa m30tess@gmail.com -862342035 ADMIN
-test test@mail.ru 1450575459 USER
+test test@gmail.com 1450575459 USER

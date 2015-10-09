@@ -16,7 +16,7 @@ public class FileCommonDao {
 
     public static FileCommonDao getInstance() { return instance; }
 
-    private FileCommonDao() {};
+    private FileCommonDao() {}
 
     private final static String booksFile = ResourceManager.getInstance().getProperty("booksFile");
 
@@ -27,15 +27,21 @@ public class FileCommonDao {
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
+            int i = 0;
+            String[] bookInfo = new String[4];
             while ((line = bufferedReader.readLine()) != null ) {
-                String[] bookInfo = line.split(",");
-                int id = Integer.parseInt(bookInfo[0]);
-                String title = bookInfo[1];
-                String author = bookInfo[2];
-                boolean type = Boolean.parseBoolean(bookInfo[3]);
-                Book book = new Book(title, author, type, id);
-                result.add(book);
+                bookInfo[i++] = line;
+                if (i == 4) {
+                    int id = Integer.parseInt(bookInfo[0]);
+                    String title = bookInfo[1];
+                    String author = bookInfo[2];
+                    boolean type = Boolean.parseBoolean(bookInfo[3]);
+                    Book book = new Book(title, author, type, id);
+                    result.add(book);
+                    i = 0;
+                }
             }
+
         } catch(IOException e){
             throw new DaoException("Error reading books from "+ booksFile, e);
         }
@@ -50,10 +56,10 @@ public class FileCommonDao {
             bufferedWriter = new BufferedWriter(fileWriter);
             for(Book book: books) {
                 StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append(book.getID());
-                stringBuilder.append("," + book.getTitle());
-                stringBuilder.append("," + book.getAuthor());
-                stringBuilder.append("," + book.getType());
+                stringBuilder.append(book.getID() + "\n");
+                stringBuilder.append(book.getTitle() + "\n");
+                stringBuilder.append(book.getAuthor() + "\n");
+                stringBuilder.append(book.getType() + "\n");
                 bufferedWriter.write(stringBuilder.toString());
                 bufferedWriter.newLine();
             }

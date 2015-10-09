@@ -1,7 +1,7 @@
 package by.bsuir.lab1.controller.command.impl;
 
-import by.bsuir.lab1.bean.FindBookResponse;
-import by.bsuir.lab1.bean.FindBooksByTitleRequest;
+import by.bsuir.lab1.bean.FindBooksRequest;
+import by.bsuir.lab1.bean.FindBooksResponse;
 import by.bsuir.lab1.bean.Request;
 import by.bsuir.lab1.bean.Response;
 import by.bsuir.lab1.controller.command.Command;
@@ -13,19 +13,15 @@ import by.bsuir.lab1.service.ServiceException;
 
 import java.util.List;
 
-/**
- * Created by Maria Teseiko on 08.10.2015.
- */
 public class FindBookByTitleCommand implements Command {
     @Override
     public Response execute(Request request) throws CommandException {
-        // validation
+
         if (!validationParameters(request)) {
             throw new CommandException("Validation Exception.");
         }
 
-        // call service
-        FindBooksByTitleRequest findRequest = (FindBooksByTitleRequest) request;
+        FindBooksRequest findRequest = (FindBooksRequest) request;
         List<Book> result;
         try {
             result = BookFindService
@@ -35,12 +31,12 @@ public class FindBookByTitleCommand implements Command {
         }
 
         // create response
-        FindBookResponse response = new FindBookResponse();
+        FindBooksResponse response = new FindBooksResponse();
         if (result != null) {
             response.setResultMessage(result.size() + " books found: ");
             response.setBooksList(result);
         } else {
-            response.setErrorMessage("Failed to add new book");
+            response.setErrorMessage("No books were found");
         }
         return response;
     }

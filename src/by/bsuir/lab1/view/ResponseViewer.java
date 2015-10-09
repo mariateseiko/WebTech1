@@ -22,8 +22,12 @@ public class ResponseViewer {
                 viewNewBookResponse(response);
                 break;
             case "LIST_ALL_BOOKS":
+            case "FIND_BOOKS_TITLE":
+            case "FIND_BOOKS_AUTHOR":
+            case "FIND_BOOKS_TITLE_AUTHOR":
                 viewAllBooks(response);
                 break;
+
         }
     }
 
@@ -43,15 +47,17 @@ public class ResponseViewer {
     }
 
     public static void viewAllBooks(Response listAllResponse) {
-        ListAllBooksResponse response = (ListAllBooksResponse)listAllResponse;
+        FindBooksResponse response = (FindBooksResponse)listAllResponse;
         List<Book> books = response.getBooksList();
         Scanner scanner = new Scanner(System.in);
         int maxBooksViewAtOnce = 3;
         int start = 0;
         boolean listMode = true;
         while (listMode) {
-            for (int i = 0; i < 3 && i + start < books.size(); i++)
+            for (int i = 0; i < 3 && i + start < books.size(); i++) {
                 System.out.println(books.get(start + i).toString());
+                System.out.println();
+            }
             if (books.size() > maxBooksViewAtOnce) {
                 if (start + maxBooksViewAtOnce < books.size())
                     System.out.println("Enter + for next page");

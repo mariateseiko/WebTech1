@@ -17,6 +17,9 @@ public class CommandHelper {
         commands.put(CommandName.REGISTER, new RegisterUserCommand());
         commands.put(CommandName.LOGOUT, new LogoutCommand());
         commands.put(CommandName.LIST_ALL_BOOKS, new ListAllBooksCommand());
+        commands.put(CommandName.FIND_BOOKS_TITLE, new FindBookByTitleCommand());
+        commands.put(CommandName.FIND_BOOKS_AUTHOR, new FindBookByTitleCommand());
+        commands.put(CommandName.FIND_BOOKS_TITLE_AUTHOR, new FindBookByTitleCommand());
     }
 
     public Command getCommand(String commandName){

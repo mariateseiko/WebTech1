@@ -1,7 +1,7 @@
 package by.bsuir.lab1.controller.command.impl;
 
+import by.bsuir.lab1.bean.FindBooksRequest;
 import by.bsuir.lab1.bean.FindBooksResponse;
-import by.bsuir.lab1.bean.ListAllBooksRequest;
 import by.bsuir.lab1.bean.Request;
 import by.bsuir.lab1.bean.Response;
 import by.bsuir.lab1.controller.command.Command;
@@ -16,20 +16,19 @@ import java.util.List;
 /**
  * Created by Maria Teseiko on 08.10.2015.
  */
-public class ListAllBooksCommand implements Command {
+public class FindBooksByAuthorCommand implements Command {
     @Override
     public Response execute(Request request) throws CommandException {
-        // validation
+
         if (!validationParameters(request)) {
             throw new CommandException("Validation Exception.");
         }
 
-        // call service
-        ListAllBooksRequest newBookRequest = (ListAllBooksRequest) request;
+        FindBooksRequest findRequest = (FindBooksRequest) request;
         List<Book> result;
         try {
-            result = BookFindService.
-                    listAllBooksService();
+            result = BookFindService
+                    .findBookByAuthorService(findRequest.getAuthor());
         } catch (ServiceException ex) {
             throw new CommandException("Command message about exception", ex);
         }
@@ -37,10 +36,10 @@ public class ListAllBooksCommand implements Command {
         // create response
         FindBooksResponse response = new FindBooksResponse();
         if (result != null) {
-            response.setResultMessage("Books in repository: ");
+            response.setResultMessage(result.size() + " books found: ");
             response.setBooksList(result);
         } else {
-            response.setErrorMessage("Fail");
+            response.setErrorMessage("No books were found");
         }
         return response;
     }

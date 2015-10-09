@@ -5,12 +5,10 @@ import by.bsuir.lab1.bean.Request;
 import by.bsuir.lab1.bean.Response;
 import by.bsuir.lab1.controller.BookController;
 import by.bsuir.lab1.controller.UserController;
+import by.bsuir.lab1.controller.command.CommandName;
 
 import java.util.Scanner;
 
-/**
- * Created by Maria Teseiko on 05.10.2015.
- */
 public class View {
     private BookController bookController = new BookController();
     private UserController userController = new UserController();
@@ -71,16 +69,73 @@ public class View {
         }
         return commandParams;
     }
+
+    private String[] getParameters(String command) throws ViewException{
+        String[] commandParameters = null;
+        Scanner scanner = new Scanner(System.in);
+        try {
+            CommandName commandName = CommandName.valueOf(command);
+        } catch (IllegalArgumentException e) {
+            throw new ViewException("Invalid command");
+        }
+        switch(CommandName.valueOf(command)) {
+            case LOGIN:
+                commandParameters = new String[2];
+                System.out.println("Login: ");
+                commandParameters[0] = scanner.next();
+                System.out.println("Password: ");
+                commandParameters[1] = scanner.next();
+                break;
+            case REGISTER:
+                commandParameters = new String[3];
+                System.out.println("Login: ");
+                commandParameters[0] = scanner.next();
+                System.out.println("E-mail: ");
+                commandParameters[1] = scanner.next();
+                System.out.println("Password: ");
+                commandParameters[2] = scanner.next();
+                break;
+            case FIND_BOOKS_TITLE:
+                commandParameters = new String[1];
+                System.out.println("Title: ");
+                commandParameters[0] = scanner.next();
+                break;
+            case FIND_BOOKS_AUTHOR:
+                commandParameters = new String[1];
+                System.out.println("Author: ");
+                commandParameters[0] = scanner.next();
+                break;
+            case FIND_BOOKS_TITLE_AUTHOR:
+                commandParameters = new String[2];
+                System.out.println("Title: ");
+                commandParameters[0] = scanner.next();
+                System.out.println("Author: ");
+                commandParameters[1] = scanner.next();
+                break;
+            case ADD_NEW_BOOK:
+                commandParameters = new String[3];
+                System.out.println("Title: ");
+                commandParameters[0] = scanner.nextLine();
+                System.out.println("Author: ");
+                commandParameters[1] = scanner.nextLine();
+                System.out.println("Type (true for E-Book, false for paperback) :");
+                commandParameters[2] = scanner.next();
+                break;
+            case EXIT:
+                System.exit(0);
+            default:
+
+        }
+        return commandParameters;
+    }
+
     private void MenuHandler(String command) {
         String error;
-        String[] commandParams = splitParameters(command);
-        String commandName = commandParams[0];
-        switch(commandName) {
-            case "EXIT":
-                System.exit(0);
-        }
+        String commandName = command.trim();
+
         try {
-            Request request = RequestFiller.fillRequest(commandParams);
+            String[] commandParams = getParameters(commandName);
+            Request request = RequestFiller.fillRequest(commandName, commandParams);
             request.setRole(userController.getRole());
             Response response = bookController.executeRequest(request);
             if ((error = response.getErrorMessage()) != null) {

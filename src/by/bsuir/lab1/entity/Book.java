@@ -53,7 +53,7 @@ public class Book {
         StringBuilder s = new StringBuilder();
         s.append("ID: " + bookID + "\n");
         s.append(title + " by " + author + "\n");
-        s.append(isEBook ? "E-Book" : "Paperback" + "\n");
+        s.append(isEBook ? "E-Book" : "Paperback");
         return s.toString();
     }
 

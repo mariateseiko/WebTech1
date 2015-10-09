@@ -5,9 +5,6 @@ import by.bsuir.lab1.dao.FindDao;
 import by.bsuir.lab1.entity.Book;
 import by.bsuir.lab1.resource.ResourceManager;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +24,7 @@ public class FileFindDao implements FindDao {
         List<Book> list = commonDao.getAllBooks();
         List<Book> result = new ArrayList<>();
         for(Book book: list){
-            if (book.getTitle() == title)
+            if (book.getTitle().equalsIgnoreCase(title))
                 result.add(book);
         }
         if (result.size() != 0 )
@@ -40,7 +37,7 @@ public class FileFindDao implements FindDao {
         List<Book> list = commonDao.getAllBooks();
         List<Book> result = new ArrayList<>();
         for(Book book: list){
-            if (book.getTitle() == author)
+            if (book.getTitle().equalsIgnoreCase(author))
                 result.add(book);
         }
         if (result.size() != 0 )
