@@ -59,9 +59,34 @@ public class RequestFiller {
                 findBooksRequest.setTitle(commandParams[0]);
                 findBooksRequest.setAuthor(commandParams[1]);
                 return findBooksRequest;
+            case EDIT_BOOK_AUTHOR:
+                ParametersVerifier.verifyEditStringParameters(commandParams);
+                EditBookRequest editAuthorRequest = new EditBookRequest();
+                editAuthorRequest.setCommandName(commandName);
+                editAuthorRequest.setID(Integer.parseInt(commandParams[0]));
+                editAuthorRequest.setNewAuthor(commandParams[1]);
+                return editAuthorRequest;
+            case EDIT_BOOK_TITLE:
+                ParametersVerifier.verifyEditStringParameters(commandParams);
+                EditBookRequest editTitleRequest = new EditBookRequest();
+                editTitleRequest.setCommandName(commandName);
+                editTitleRequest.setID(Integer.parseInt(commandParams[0]));
+                editTitleRequest.setNewTitle(commandParams[1]);
+                return editTitleRequest;
+            case EDIT_BOOK_TYPE:
+                ParametersVerifier.verifyBookID(commandParams[0]);
+                EditBookRequest editTypeRequest = new EditBookRequest();
+                editTypeRequest.setCommandName(commandName);
+                editTypeRequest.setID(Integer.parseInt(commandParams[0]));
+                return editTypeRequest;
+            case DELETE_BOOK:
+                ParametersVerifier.verifyBookID(commandParams[0]);
+                DeleteBookRequest deleteBookRequest = new DeleteBookRequest();
+                deleteBookRequest.setCommandName(commandName);
+                deleteBookRequest.setID(Integer.parseInt(commandParams[0]));
+                return deleteBookRequest;
             default:
                 throw new ViewException("Invalid command");
-
         }
     }
 }

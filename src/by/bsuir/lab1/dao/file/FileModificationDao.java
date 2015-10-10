@@ -27,6 +27,7 @@ public class FileModificationDao implements ModificationDao {
     public boolean addNewBook(Book book) throws DaoException {
         try {
             List<Book> books = commonDao.getAllBooks();
+            book.setID(defineID(books));
             books.add(book);
             commonDao.saveAllBooks(books);
         } catch (DaoException e) {
@@ -34,6 +35,25 @@ public class FileModificationDao implements ModificationDao {
         }
         return true;
     }
+
+    private int defineID(List<Book> books) {
+        ArrayList<Integer> idCount = new ArrayList<>();
+        for(Book book: books) {
+            idCount.set(book.getID(), 1);
+        }
+        int result = -1;
+        for (int i = 0; i < idCount.size(); i++) {
+            if (idCount.get(i) == 0) {
+                result = i;
+                break;
+            }
+        }
+        if (result < 0)
+            return idCount.size();
+        else
+            return result;
+    }
+
 
     @Override
     public boolean editBookTitle(int id, String newTitle) throws DaoException {
@@ -85,7 +105,30 @@ public class FileModificationDao implements ModificationDao {
         return true;
     }
 
-
+    @Override
+    public boolean editBookType(int id) throws DaoException {
+        try {
+            List<Book> books = commonDao.getAllBooks();
+            Book book = null;
+            Iterator iterator = books.iterator();
+            while (iterator.hasNext()) {
+                book = (Book)iterator.next();
+                if (book.getID() == id) {
+                    break;
+                }
+            }
+            if (book != null) {
+                Book newBook = books.remove(books.indexOf(book));
+                newBook.setType(!newBook.getType());
+                books.add(newBook);
+                commonDao.saveAllBooks(books);
+            }
+            else return false;
+        } catch (DaoException e) {
+            throw new DaoException("Couldn't edit book's type");
+        }
+        return true;
+    }
 
     @Override
     public boolean deleteBook(int id) throws DaoException {

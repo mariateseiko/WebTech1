@@ -68,4 +68,21 @@ public class ParametersVerifier {
                 throw new ViewException("One or more parameters is not specified");
         return true;
     }
+
+    public static boolean verifyBookID(String id) throws ViewException{
+        try {
+            Integer.parseInt(id);
+        } catch (NumberFormatException e) {
+            throw new ViewException("Book's id should be a numeric value");
+        }
+        return true;
+    }
+
+    public static void verifyEditStringParameters(String[] parameters) throws ViewException {
+        verifyBookID(parameters[0]);
+        if (parameters[1] == null || parameters[1].isEmpty())
+            throw new ViewException("You have to specify search parameter");
+    }
+
+
 }

@@ -61,7 +61,6 @@ public class FileCommonDao {
                 stringBuilder.append(book.getAuthor() + "\n");
                 stringBuilder.append(book.getType() + "\n");
                 bufferedWriter.write(stringBuilder.toString());
-                bufferedWriter.newLine();
             }
             bufferedWriter.flush();
         } catch(IOException e) {

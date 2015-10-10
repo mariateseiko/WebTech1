@@ -7,22 +7,18 @@ public class Book {
     private String title;
     private String author;
     private int bookID;
-    private static int bookCount = 0;
     private boolean isEBook;
 
-    public Book() { this.bookID = ++bookCount; }
+    public Book() {}
 
     public Book(String title, String author, boolean isEBook) {
         this.title = title;
         this.author = author;
         this.isEBook = isEBook;
-        this.bookID = ++bookCount;
     }
 
     public Book(String title, String author, boolean isEBook, int id) {
-        this.title = title;
-        this.author = author;
-        this.isEBook = isEBook;
+        this(title, author, isEBook);
         this.bookID = id;
     }
 
@@ -47,6 +43,8 @@ public class Book {
     public void setType(boolean isEBook) { this.isEBook = isEBook; }
 
     public boolean getType() { return isEBook; }
+
+    public void setID(int bookID) { this.bookID = bookID; }
 
     @Override
     public String toString() {
@@ -83,6 +81,9 @@ public class Book {
             return false;
 
         if (isEBook != other.isEBook)
+            return false;
+
+        if (bookID != other.bookID)
             return false;
 
         return true;

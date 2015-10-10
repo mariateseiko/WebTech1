@@ -55,4 +55,15 @@ public class RepositoryModificationService {
         }
         return true;
     }
+
+    public static boolean editBookTypeService(int id) throws ServiceException {
+        DaoFactory daoFactory = DaoFactory.getDaoFactory();
+        ModificationDao modificationDao = daoFactory.getModificationDao();
+        try {
+            modificationDao.editBookType(id);
+        } catch (DaoException e) {
+            throw new ServiceException("Service exception", e);
+        }
+        return true;
+    }
 }

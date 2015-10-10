@@ -20,6 +20,10 @@ public class CommandHelper {
         commands.put(CommandName.FIND_BOOKS_TITLE, new FindBookByTitleCommand());
         commands.put(CommandName.FIND_BOOKS_AUTHOR, new FindBookByTitleCommand());
         commands.put(CommandName.FIND_BOOKS_TITLE_AUTHOR, new FindBookByTitleCommand());
+        commands.put(CommandName.EDIT_BOOK_AUTHOR, new EditBookAuthorCommand());
+        commands.put(CommandName.EDIT_BOOK_TITLE, new EditBookTitleCommand());
+        commands.put(CommandName.EDIT_BOOK_TYPE, new EditBookTypeCommand());
+        commands.put(CommandName.DELETE_BOOK, new DeleteBookCommand());
     }
 
     public Command getCommand(String commandName){
