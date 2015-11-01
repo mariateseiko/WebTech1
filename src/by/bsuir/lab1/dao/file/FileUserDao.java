@@ -11,16 +11,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Maria Teseiko on 10.09.2015.
+ * Implementation of {@link by.bsuir.lab1.dao.UserDao} for file storage
  */
 public class FileUserDao implements UserDao {
     private final static FileUserDao instance = new FileUserDao();
     private final static String usersFile = ResourceManager.getInstance().getProperty("usersFile");
     private FileUserDao(){}
 
-
+    /**
+     * Singleton pattern implementation
+     * @return instance of this data access object
+     */
     public static FileUserDao getInstance() { return instance; }
-
 
     @Override
     public UserRole authorizeUser(User user) throws DaoException {
@@ -29,7 +31,6 @@ public class FileUserDao implements UserDao {
         User userInfo = users.get(user.getLogin());
         if (userInfo != null) {
             if (userInfo.getPasswordHash() == user.getPasswordHash()){
-                user = userInfo;
                 return userInfo.getRole();
             }
         }
@@ -49,6 +50,12 @@ public class FileUserDao implements UserDao {
         }
     }
 
+    /**
+     * Reads user's info from file and return a map with login as a key and {@link by.bsuir.lab1.entity.User} as value
+     *
+     * @return map with login as a key and {@link by.bsuir.lab1.entity.User} as value
+     * @throws DaoException Thrown if any issue occurs while working with file
+     */
     private Map<String, User> getAllUsers() throws DaoException{
         HashMap<String, User> result = new HashMap<>();
         try {
@@ -71,6 +78,11 @@ public class FileUserDao implements UserDao {
         return result;
     }
 
+    /**
+     * Writes a map containing all users' info to file
+     * @param users a map with login as a key and {@link by.bsuir.lab1.entity.User} as value
+     * @throws DaoException Thrown if any issue occurs while working with ile
+     */
     private  void saveAllUsers(Map<String, User> users) throws DaoException{
         try {
             File file = new File(usersFile);
@@ -87,7 +99,6 @@ public class FileUserDao implements UserDao {
                 bufferedWriter.newLine();
             }
             bufferedWriter.flush();
-
         } catch(IOException e) {
             throw new DaoException("Error saving books" + usersFile, e);
         }

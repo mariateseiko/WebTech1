@@ -3,7 +3,7 @@ package by.bsuir.lab1.bean;
 import by.bsuir.lab1.entity.Book;
 
 /**
- * Created by Maria Teseiko on 08.10.2015.
+ * A request to find {@link by.bsuir.lab1.entity.Book} with given parameters
  */
 public class FindBooksRequest extends Request {
     private Book book = new Book();
@@ -17,8 +17,4 @@ public class FindBooksRequest extends Request {
     public void setAuthor(String author) { book.setAuthor(author); }
 
     public String getAuthor() { return book.getAuthor(); }
-
-    public void setType(boolean isEBook) { book.setType(isEBook); }
-
-    public boolean getType() { return book.getType(); }
 }

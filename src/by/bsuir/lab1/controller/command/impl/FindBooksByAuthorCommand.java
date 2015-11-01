@@ -14,7 +14,7 @@ import by.bsuir.lab1.service.ServiceException;
 import java.util.List;
 
 /**
- * Created by Maria Teseiko on 08.10.2015.
+ * Command for handling a {@link by.bsuir.lab1.bean.FindBooksRequest} to find by author
  */
 public class FindBooksByAuthorCommand implements Command {
     @Override
@@ -30,13 +30,11 @@ public class FindBooksByAuthorCommand implements Command {
             result = BookFindService
                     .findBookByAuthorService(findRequest.getAuthor());
         } catch (ServiceException ex) {
-            throw new CommandException("Command message about exception", ex);
+            throw new CommandException("Book search failed", ex);
         }
 
-        // create response
         FindBooksResponse response = new FindBooksResponse();
         if (result != null) {
-            response.setResultMessage(result.size() + " books found: ");
             response.setBooksList(result);
         } else {
             response.setErrorMessage("No books were found");
@@ -44,9 +42,12 @@ public class FindBooksByAuthorCommand implements Command {
         return response;
     }
 
+    /**
+     * Validates parameters of the {@link by.bsuir.lab1.bean.EditBookRequest}
+     * @param request request to be validates
+     * @return true if request's user is admin or a registered user
+     */
     private boolean validationParameters(Request request) {
-        if (request.getRole() == UserRole.ADMIN || request.getRole() == UserRole.USER)
-            return true;
-        return false;
+        return (request.getRole() == UserRole.ADMIN || request.getRole() == UserRole.USER);
     }
 }

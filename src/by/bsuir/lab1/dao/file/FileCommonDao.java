@@ -9,17 +9,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Maria Teseiko on 08.10.2015.
+ * Data Access Object providing access to common interactions with book's info files
  */
-public class FileCommonDao {
+class FileCommonDao {
     private final static FileCommonDao instance = new FileCommonDao();
 
-    public static FileCommonDao getInstance() { return instance; }
+    /**
+     * Singleton pattern implementation
+     * @return instance of this data access object
+     */
+    static FileCommonDao getInstance() { return instance; }
 
     private FileCommonDao() {}
 
     private final static String booksFile = ResourceManager.getInstance().getProperty("booksFile");
 
+    /**
+     * Reads all books from {@link #booksFile} and returns a list of {@link by.bsuir.lab1.entity.Book}
+     * @return all books in the repository
+     * @throws DaoException Thrown if any issue occurs while working with database/file
+     */
     public List<Book> getAllBooks() throws DaoException {
         ArrayList<Book> result = new ArrayList<>();
         try {
@@ -41,19 +50,21 @@ public class FileCommonDao {
                     i = 0;
                 }
             }
-
         } catch(IOException e){
             throw new DaoException("Error reading books from "+ booksFile, e);
         }
         return result;
     }
 
+    /**
+     * Writes all books to {@link #booksFile}
+     * @throws DaoException Thrown if any issue occurs while working with database/file
+     */
     public void saveAllBooks(List<Book> books) throws DaoException{
-        BufferedWriter bufferedWriter = null;
         try {
             File file = new File(booksFile);
             FileWriter fileWriter = new FileWriter(file);
-            bufferedWriter = new BufferedWriter(fileWriter);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             for(Book book: books) {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append(book.getID() + "\n");

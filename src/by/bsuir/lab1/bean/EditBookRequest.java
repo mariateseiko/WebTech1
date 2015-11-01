@@ -3,7 +3,7 @@ package by.bsuir.lab1.bean;
 import by.bsuir.lab1.entity.Book;
 
 /**
- * Created by Maria Teseiko on 10.10.2015.
+ * A request to edit book's chosen parameter
  */
 public class EditBookRequest extends Request {
     private int id;
@@ -17,7 +17,4 @@ public class EditBookRequest extends Request {
 
     public void setNewAuthor(String author) { book.setAuthor(author); }
     public String getNewAuthor() { return book.getAuthor(); }
-
-    public void setNewType(boolean isEBook) { book.setType(isEBook); }
-    public boolean getNewType() { return book.getType(); }
 }

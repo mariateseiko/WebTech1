@@ -1,7 +1,7 @@
 package by.bsuir.lab1.entity;
 
 /**
- * Created by Maria Teseiko on 10.09.2015.
+ * The Book class represents all identifying info of any book object in the system
  */
 public class Book {
     private String title;
@@ -11,34 +11,41 @@ public class Book {
 
     public Book() {}
 
+    /**
+     * Constructs a new book wih given title, author and specified book type
+     *
+     * @param title book's title
+     * @param author book's author
+     * @param isEBook specifies whether the book is a e-book(value is true) or a paperback book(value is false)
+     */
     public Book(String title, String author, boolean isEBook) {
         this.title = title;
         this.author = author;
         this.isEBook = isEBook;
     }
 
+    /**
+     *  Constructs a new book wih given title, author and specified book type
+     *
+     * @param title book's title
+     * @param author book's author
+     * @param isEBook specifies whether the book is a e-book(value is true) or a paperback book(value is false)
+     * @param id book's unique ID assigned by the system, is less or equal to the total number of books in the system
+     */
     public Book(String title, String author, boolean isEBook, int id) {
         this(title, author, isEBook);
         this.bookID = id;
     }
 
-    public String getTitle() {
-        return title;
-    }
+    public String getTitle() { return title; }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public void setTitle(String title) { this.title = title; }
 
-    public String getAuthor() {
-        return author;
-    }
+    public String getAuthor() { return author; }
 
     public void setAuthor(String author) { this.author = author; }
 
-    public int getID() {
-        return bookID;
-    }
+    public int getID() { return bookID; }
 
     public void setType(boolean isEBook) { this.isEBook = isEBook; }
 

@@ -1,12 +1,14 @@
 package by.bsuir.lab1.controller.command.impl;
 
-import by.bsuir.lab1.bean.*;
+import by.bsuir.lab1.bean.LogoutResponse;
+import by.bsuir.lab1.bean.Request;
+import by.bsuir.lab1.bean.Response;
 import by.bsuir.lab1.controller.command.Command;
 import by.bsuir.lab1.controller.command.CommandException;
 import by.bsuir.lab1.entity.UserRole;
 
 /**
- * Created by Maria Teseiko on 05.10.2015.
+ * Command for handling logout request
  */
 public class LogoutCommand implements Command {
     @Override
@@ -17,14 +19,17 @@ public class LogoutCommand implements Command {
 
         LogoutResponse response = new LogoutResponse();
         response.setResultMessage("Successfully logged out");
-        response.setGuestUser();
+        response.setUser();
         return response;
     }
 
+    /**
+     * Validates parameters of the {@link by.bsuir.lab1.bean.EditBookRequest}
+     * @param request request to be validates
+     * @return true if request's user is not a guest
+     */
     private boolean validationParameters(Request request) {
-        if (request.getRole() != UserRole.GUEST)
-            return true;
-        return false;
+        return request.getRole() != UserRole.GUEST;
     }
 
 }

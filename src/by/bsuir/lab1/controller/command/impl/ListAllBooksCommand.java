@@ -1,7 +1,6 @@
 package by.bsuir.lab1.controller.command.impl;
 
 import by.bsuir.lab1.bean.FindBooksResponse;
-import by.bsuir.lab1.bean.ListAllBooksRequest;
 import by.bsuir.lab1.bean.Request;
 import by.bsuir.lab1.bean.Response;
 import by.bsuir.lab1.controller.command.Command;
@@ -14,40 +13,38 @@ import by.bsuir.lab1.service.ServiceException;
 import java.util.List;
 
 /**
- * Created by Maria Teseiko on 08.10.2015.
+ * Command for handling a {@link by.bsuir.lab1.bean.FindBooksRequest} to get all books
  */
 public class ListAllBooksCommand implements Command {
     @Override
     public Response execute(Request request) throws CommandException {
-        // validation
         if (!validationParameters(request)) {
             throw new CommandException("Validation Exception.");
         }
 
-        // call service
-        ListAllBooksRequest newBookRequest = (ListAllBooksRequest) request;
         List<Book> result;
         try {
             result = BookFindService.
                     listAllBooksService();
         } catch (ServiceException ex) {
-            throw new CommandException("Command message about exception", ex);
+            throw new CommandException("Failed to get list of books", ex);
         }
 
-        // create response
         FindBooksResponse response = new FindBooksResponse();
         if (result != null) {
-            response.setResultMessage("Books in repository: ");
             response.setBooksList(result);
         } else {
-            response.setErrorMessage("Fail");
+            response.setErrorMessage("No book in the repository");
         }
         return response;
     }
 
+    /**
+     * Validates parameters of the {@link by.bsuir.lab1.bean.EditBookRequest}
+     * @param request request to be validates
+     * @return true if request's user is admin or a registered user
+     */
     private boolean validationParameters(Request request) {
-        if (request.getRole() == UserRole.ADMIN || request.getRole() == UserRole.USER)
-            return true;
-        return false;
+        return (request.getRole() == UserRole.ADMIN || request.getRole() == UserRole.USER);
     }
 }

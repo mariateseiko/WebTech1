@@ -14,9 +14,9 @@ import by.bsuir.lab1.service.ServiceException;
 import java.util.List;
 
 /**
- * Command for handling a {@link by.bsuir.lab1.bean.FindBooksRequest} to find by title
+ * Command for handling a {@link by.bsuir.lab1.bean.FindBooksRequest} to find by author and title
  */
-public class FindBookByTitleCommand implements Command {
+public class FindBooksByTitleAndAuthorCommand implements Command {
     @Override
     public Response execute(Request request) throws CommandException {
 
@@ -28,7 +28,7 @@ public class FindBookByTitleCommand implements Command {
         List<Book> result;
         try {
             result = BookFindService
-                    .findBookByTitleService(findRequest.getTitle());
+                    .findBooksByTitleAndAuthorService(findRequest.getTitle(), findRequest.getAuthor());
         } catch (ServiceException ex) {
             throw new CommandException("Book search failed", ex);
         }

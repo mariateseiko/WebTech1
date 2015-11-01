@@ -1,7 +1,7 @@
 package by.bsuir.lab1.bean;
 
 /**
- * Created by Maria Teseiko on 05.10.2015.
+ * A response for {@link by.bsuir.lab1.bean.RegistrationRequest}
  */
 public class RegistrationResponse extends Response {
     private String resultMessage;

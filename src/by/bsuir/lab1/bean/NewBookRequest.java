@@ -3,7 +3,7 @@ package by.bsuir.lab1.bean;
 import by.bsuir.lab1.entity.Book;
 
 /**
- * Created by Maria Teseiko on 03.10.2015.
+ * A request to add a new book to the repository
  */
 public class NewBookRequest extends Request{
     private Book newBook = new Book();

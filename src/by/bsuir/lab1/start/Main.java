@@ -3,7 +3,7 @@ package by.bsuir.lab1.start;
 import by.bsuir.lab1.view.View;
 
 /**
- * Created by Maria Teseiko on 05.10.2015.
+ * Entry point of the application. Creates View layer and runs it
  */
 public class Main {
     public static void main(String[] args) {

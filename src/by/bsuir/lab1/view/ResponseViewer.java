@@ -7,9 +7,14 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Created by Maria Teseiko on 07.10.2015.
+ * Generates user's view according to response type and command name
  */
 public class ResponseViewer {
+    /**
+     * Chooses a view according to the command name and response
+     * @param response response to view
+     * @param command specifies type of the response
+     */
     public static void view(Response response, String command) {
         switch(command) {
             case "REGISTER":
@@ -27,7 +32,17 @@ public class ResponseViewer {
             case "FIND_BOOKS_TITLE_AUTHOR":
                 viewAllBooks(response);
                 break;
-
+            case "DELETE_BOOK":
+                viewDeleteResponse(response);
+                break;
+            case "EDIT_BOOK_TITLE":
+            case "EDIT_BOOK_AUTHOR":
+            case "EDIT_BOOK_TYPE":
+                viewEditResponse(response);
+                break;
+            case "LOGOUT":
+                viewLogoutResponse(response);
+                break;
         }
     }
 
@@ -41,11 +56,30 @@ public class ResponseViewer {
         System.out.println(response.getResultMessage());
     }
 
+    public static void viewLogoutResponse(Response logoutResponse) {
+        LogoutResponse response = (LogoutResponse)logoutResponse;
+        System.out.println(response.getResultMessage());
+    }
+
+    public static void viewEditResponse(Response editResponse) {
+        EditBookResponse response = (EditBookResponse)editResponse;
+        System.out.println(response.getResultMessage());
+    }
     public static void viewNewBookResponse(Response bookResponse) {
         NewBookResponse response = (NewBookResponse)bookResponse;
         System.out.println(response.getResultMessage());
     }
 
+    public static void viewDeleteResponse(Response deleteResponse) {
+        DeleteBookResponse response = (DeleteBookResponse)deleteResponse;
+        System.out.println(response.getResultMessage());
+    }
+
+    /**
+     * Views list of all books. Shows {maxBooksViewAtOnce} and let's user to scroll the pages or to exit
+     * to the main menu
+     * @param listAllResponse list of books to show
+     */
     public static void viewAllBooks(Response listAllResponse) {
         FindBooksResponse response = (FindBooksResponse)listAllResponse;
         List<Book> books = response.getBooksList();

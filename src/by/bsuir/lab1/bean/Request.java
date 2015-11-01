@@ -3,7 +3,7 @@ package by.bsuir.lab1.bean;
 import by.bsuir.lab1.entity.UserRole;
 
 /**
- * Created by Maria Teseiko on 03.10.2015.
+ * A request for command from a {@link by.bsuir.lab1.entity.User} with a specified {@link by.bsuir.lab1.entity.UserRole}
  */
 public class Request {
     private String commandName;

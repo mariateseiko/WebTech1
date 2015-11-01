@@ -3,6 +3,9 @@ package by.bsuir.lab1.controller;
 import by.bsuir.lab1.controller.command.CommandName;
 import by.bsuir.lab1.entity.UserRole;
 
+/**
+ * Controls {@link by.bsuir.lab1.entity.User}'s access rights and provides him with a corresponding set of Commands names
+ */
 public class UserController {
     private UserRole role;
     private static final CommandName[] userCommands = {CommandName.LIST_ALL_BOOKS, CommandName.FIND_BOOKS_TITLE, CommandName.FIND_BOOKS_AUTHOR,

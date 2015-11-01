@@ -1,13 +1,17 @@
 package by.bsuir.lab1.dao.factoryimp;
 
-import by.bsuir.lab1.dao.*;
-
+import by.bsuir.lab1.dao.DaoFactory;
+import by.bsuir.lab1.dao.FindDao;
+import by.bsuir.lab1.dao.ModificationDao;
+import by.bsuir.lab1.dao.UserDao;
 import by.bsuir.lab1.dao.file.FileFindDao;
 import by.bsuir.lab1.dao.file.FileModificationDao;
 import by.bsuir.lab1.dao.file.FileUserDao;
 
 /**
- * Created by Maria Teseiko on 10.09.2015.
+ * DAO Factory for file storage
+ *
+ * @see by.bsuir.lab1.dao.DaoFactory
  */
 public class FileDaoFactory extends DaoFactory {
     private static final FileDaoFactory instance = new FileDaoFactory();
@@ -15,6 +19,7 @@ public class FileDaoFactory extends DaoFactory {
     private FileDaoFactory(){}
 
     public static FileDaoFactory getInstance() { return instance; }
+
     @Override
     public FindDao getFindDao() { return FileFindDao.getInstance(); }
 

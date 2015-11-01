@@ -3,24 +3,23 @@ package by.bsuir.lab1.dao.file;
 import by.bsuir.lab1.dao.DaoException;
 import by.bsuir.lab1.dao.ModificationDao;
 import by.bsuir.lab1.entity.Book;
-import by.bsuir.lab1.entity.User;
-import by.bsuir.lab1.entity.UserRole;
-import by.bsuir.lab1.resource.ResourceManager;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
- * Created by Maria Teseiko on 10.09.2015.
+ * Implementation of {@link by.bsuir.lab1.dao.ModificationDao} for file storage
  */
 public class FileModificationDao implements ModificationDao {
     private final static FileModificationDao instance = new FileModificationDao();
-    private final static String booksFile = ResourceManager.getInstance().getProperty("booksFile");
     private FileModificationDao(){}
     private FileCommonDao commonDao = FileCommonDao.getInstance();
+
+    /**
+     * Singleton pattern implementation
+     * @return instance of this data access object
+     */
     public static FileModificationDao getInstance() { return instance; }
 
     @Override
@@ -36,6 +35,14 @@ public class FileModificationDao implements ModificationDao {
         return true;
     }
 
+    /**
+     * Returns first unassigned book ID
+     * <p>
+     *    Goes over the books list, gets each book ID and defines the smallest ID that doesn't belong to any book.
+     * </p>
+     * @param books all books in the repository
+     * @return smallest ID not assigned to any book
+     */
     private int defineID(List<Book> books) {
         ArrayList<Integer> idCount = new ArrayList<>();
         for(Book book: books) {
@@ -54,21 +61,19 @@ public class FileModificationDao implements ModificationDao {
             return result;
     }
 
-
     @Override
     public boolean editBookTitle(int id, String newTitle) throws DaoException {
         try {
             List<Book> books = commonDao.getAllBooks();
-            Book book = null;
-            Iterator iterator = books.iterator();
-            while (iterator.hasNext()) {
-                book = (Book)iterator.next();
+            Book bookToEdit = null;
+            for(Book book: books) {
                 if (book.getID() == id) {
+                    bookToEdit = book;
                     break;
                 }
             }
-            if (book != null) {
-                Book newBook = books.remove(books.indexOf(book));
+            if (bookToEdit != null) {
+                Book newBook = books.remove(books.indexOf(bookToEdit));
                 newBook.setTitle(newTitle);
                 books.add(newBook);
                 commonDao.saveAllBooks(books);
@@ -84,16 +89,15 @@ public class FileModificationDao implements ModificationDao {
     public boolean editBookAuthor(int id, String newAuthor) throws DaoException {
         try {
             List<Book> books = commonDao.getAllBooks();
-            Book book = null;
-            Iterator iterator = books.iterator();
-            while (iterator.hasNext()) {
-                book = (Book)iterator.next();
+            Book bookToEdit = null;
+            for(Book book: books) {
                 if (book.getID() == id) {
+                    bookToEdit = book;
                     break;
                 }
             }
-            if (book != null) {
-                Book newBook = books.remove(books.indexOf(book));
+            if (bookToEdit != null) {
+                Book newBook = books.remove(books.indexOf(bookToEdit));
                 newBook.setAuthor(newAuthor);
                 books.add(newBook);
                 commonDao.saveAllBooks(books);
@@ -109,16 +113,15 @@ public class FileModificationDao implements ModificationDao {
     public boolean editBookType(int id) throws DaoException {
         try {
             List<Book> books = commonDao.getAllBooks();
-            Book book = null;
-            Iterator iterator = books.iterator();
-            while (iterator.hasNext()) {
-                book = (Book)iterator.next();
+            Book bookToEdit = null;
+            for(Book book: books) {
                 if (book.getID() == id) {
+                    bookToEdit = book;
                     break;
                 }
             }
-            if (book != null) {
-                Book newBook = books.remove(books.indexOf(book));
+            if (bookToEdit != null) {
+                Book newBook = books.remove(books.indexOf(bookToEdit));
                 newBook.setType(!newBook.getType());
                 books.add(newBook);
                 commonDao.saveAllBooks(books);
@@ -142,7 +145,6 @@ public class FileModificationDao implements ModificationDao {
                     return true;
                 }
             }
-
         } catch (DaoException e) {
             throw new DaoException("Couldn't edit book's author");
         }

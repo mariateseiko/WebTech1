@@ -3,7 +3,7 @@ package by.bsuir.lab1.bean;
 import by.bsuir.lab1.entity.User;
 
 /**
- * Created by Maria Teseiko on 03.10.2015.
+ * A request to login user into the system
  */
 public class LoginRequest extends Request {
     private User userInfo = new User();

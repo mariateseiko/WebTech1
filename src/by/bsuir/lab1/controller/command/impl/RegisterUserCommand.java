@@ -11,38 +11,38 @@ import by.bsuir.lab1.service.ServiceException;
 import by.bsuir.lab1.service.UserRegistrationService;
 
 /**
- * Created by Maria Teseiko on 05.10.2015.
+ * Command for handling a {@link by.bsuir.lab1.bean.RegistrationRequest}
  */
 public class RegisterUserCommand implements Command {
     @Override
     public Response execute(Request request) throws CommandException {
-        // validation
         if (!validationParameters(request)) {
             throw new CommandException("Validation Exception.");
         }
 
-        // call service
         RegistrationRequest registrationRequest = (RegistrationRequest) request;
-        boolean result = false;
+        boolean result;
         try {
             result = UserRegistrationService.registerUserService(registrationRequest.getUserInfo());
         } catch (ServiceException ex) {
-            throw new CommandException("Command message about exception", ex);
+            throw new CommandException("User registration failed", ex);
         }
 
-        // create response
         RegistrationResponse  response = new RegistrationResponse();
         if (result) {
-            response.setResultMessage("New user registered sucessfully");
+            response.setResultMessage("New user registered successfully");
         } else {
             response.setErrorMessage("Couldn't register user");
         }
         return response;
     }
 
+    /**
+     * Validates parameters of the {@link by.bsuir.lab1.bean.EditBookRequest}
+     * @param request request to be validates
+     * @return true if request's user is a guest
+     */
     private boolean validationParameters(Request request) {
-        if (request.getRole() == UserRole.GUEST)
-            return true;
-        return false;
+       return (request.getRole() == UserRole.GUEST);
     }
 }

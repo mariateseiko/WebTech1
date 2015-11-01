@@ -5,9 +5,15 @@ import by.bsuir.lab1.controller.command.CommandName;
 import java.util.Scanner;
 
 /**
- * Created by Maria Teseiko on 10.10.2015.
+ * Handles user's input and forms command parameters
  */
 public class ParametersGetter {
+    /**
+     * Gets parameters from the user according to the command
+     * @param command name of the command to get request parameters for
+     * @return request parameters list
+     * @throws ViewException Thrown if command is invalid
+     */
     public static String[] get(String command) throws ViewException {
         String[] commandParameters = null;
         Scanner scanner = new Scanner(System.in);
@@ -82,7 +88,6 @@ public class ParametersGetter {
 
             case EXIT:
                 System.exit(0);
-            default:
         }
         return commandParameters;
     }

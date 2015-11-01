@@ -1,11 +1,9 @@
 package by.bsuir.lab1.service;
 
 /**
- * Created by Maria Teseiko on 03.10.2015.
+ * Exception Thrown if any exception on service or  any underlying level is thrown
  */
 public class ServiceException extends Exception {
-    private static final long serialVersionUID = 1L;
-
     public ServiceException(String message){
         super(message);
     }

@@ -1,7 +1,7 @@
 package by.bsuir.lab1.controller.command.impl;
 
 import by.bsuir.lab1.bean.EditBookRequest;
-import by.bsuir.lab1.bean.FindBooksResponse;
+import by.bsuir.lab1.bean.EditBookResponse;
 import by.bsuir.lab1.bean.Request;
 import by.bsuir.lab1.bean.Response;
 import by.bsuir.lab1.controller.command.Command;
@@ -11,7 +11,7 @@ import by.bsuir.lab1.service.RepositoryModificationService;
 import by.bsuir.lab1.service.ServiceException;
 
 /**
- * Created by Maria Teseiko on 10.10.2015.
+ * Command for handling a {@link by.bsuir.lab1.bean.EditBookRequest} to edit author
  */
 public class EditBookAuthorCommand implements Command {
     @Override
@@ -27,22 +27,24 @@ public class EditBookAuthorCommand implements Command {
             result = RepositoryModificationService
                     .editBookAuthorService(editRequest.getID(), editRequest.getNewAuthor());
         } catch (ServiceException ex) {
-            throw new CommandException("Command message about exception", ex);
+            throw new CommandException("Couldn't edit book's author", ex);
         }
 
-        // create response
-        FindBooksResponse response = new FindBooksResponse();
+        EditBookResponse response = new EditBookResponse();
         if (result) {
             response.setResultMessage("Book's author successfully edited");
         } else {
-            response.setErrorMessage("Couldn't delete book");
+            response.setErrorMessage("Couldn't edit book's author");
         }
         return response;
     }
 
+    /**
+     * Validates parameters of the {@link by.bsuir.lab1.bean.EditBookRequest}
+     * @param request request to be validates
+     * @return true if request's user is admin
+     */
     private boolean validationParameters(Request request) {
-        if (request.getRole() == UserRole.ADMIN)
-            return true;
-        return false;
+        return (request.getRole() == UserRole.ADMIN);
     }
 }

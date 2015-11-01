@@ -4,9 +4,17 @@ import by.bsuir.lab1.bean.*;
 import by.bsuir.lab1.controller.command.CommandName;
 
 /**
- * Created by Maria Teseiko on 07.10.2015.
+ * Fills all types of requests with corresponding parameters
  */
 public class RequestFiller {
+    /**
+     * Verifies parameters of the request and in case of successful verification creates a new Request for the given
+     * command name and fills it with corresponding parameters.
+     * @param commandName name of the command to create response for
+     * @param commandParams parameters to fill in the request
+     * @return formed Request
+     * @throws ViewException Thrown if command name is invalid
+     */
     public static Request fillRequest(String commandName, String[] commandParams) throws ViewException {
         switch (CommandName.valueOf(commandName)) {
             case REGISTER:
@@ -25,7 +33,7 @@ public class RequestFiller {
                 loginRequest.setUserPassword(commandParams[1]);
                 return loginRequest;
             case LOGOUT:
-                LogoutRequest logoutRequest = new LogoutRequest();
+                Request logoutRequest = new Request();
                 logoutRequest.setCommandName(commandName);
                 return logoutRequest;
             case ADD_NEW_BOOK:
@@ -37,7 +45,7 @@ public class RequestFiller {
                 newBookRequest.setBookType(Boolean.parseBoolean(commandParams[2]));
                 return newBookRequest;
             case LIST_ALL_BOOKS:
-                ListAllBooksRequest listAllBooksRequest = new ListAllBooksRequest();
+                Request listAllBooksRequest = new Request();
                 listAllBooksRequest.setCommandName(commandName);
                 return listAllBooksRequest;
             case FIND_BOOKS_TITLE:

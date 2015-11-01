@@ -1,7 +1,7 @@
 package by.bsuir.lab1.dao;
 
 /**
- * Created by Maria Teseiko on 10.09.2015.
+ * A wrapping exception for any exception thrown at DAO level
  */
 public class DaoException extends Exception {
 

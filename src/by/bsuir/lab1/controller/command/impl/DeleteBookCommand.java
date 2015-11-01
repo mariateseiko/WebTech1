@@ -1,7 +1,7 @@
 package by.bsuir.lab1.controller.command.impl;
 
 import by.bsuir.lab1.bean.DeleteBookRequest;
-import by.bsuir.lab1.bean.FindBooksResponse;
+import by.bsuir.lab1.bean.DeleteBookResponse;
 import by.bsuir.lab1.bean.Request;
 import by.bsuir.lab1.bean.Response;
 import by.bsuir.lab1.controller.command.Command;
@@ -11,7 +11,7 @@ import by.bsuir.lab1.service.RepositoryModificationService;
 import by.bsuir.lab1.service.ServiceException;
 
 /**
- * Created by Maria Teseiko on 10.10.2015.
+ * Command for handling a {@link by.bsuir.lab1.bean.DeleteBookRequest}
  */
 public class DeleteBookCommand implements Command {
     @Override
@@ -27,11 +27,10 @@ public class DeleteBookCommand implements Command {
             result = RepositoryModificationService
                     .deleteBookService(deleteRequest.getID());
         } catch (ServiceException ex) {
-            throw new CommandException("Command message about exception", ex);
+            throw new CommandException("Failed to delete book", ex);
         }
 
-        // create response
-        FindBooksResponse response = new FindBooksResponse();
+        DeleteBookResponse response = new DeleteBookResponse();
         if (result) {
             response.setResultMessage("Book successfully deleted");
         } else {
@@ -40,9 +39,12 @@ public class DeleteBookCommand implements Command {
         return response;
     }
 
+    /**
+     * Validates parameters of the {@link by.bsuir.lab1.bean.DeleteBookRequest}
+     * @param request request to be validates
+     * @return true if request's user is admin
+     */
     private boolean validationParameters(Request request) {
-        if (request.getRole() == UserRole.ADMIN)
-            return true;
-        return false;
+        return request.getRole() == UserRole.ADMIN;
     }
 }

@@ -9,25 +9,44 @@ import by.bsuir.lab1.controller.command.CommandName;
 
 import java.util.Scanner;
 
+/**
+ * Handles interactions with the user
+ */
 public class View {
     private BookController bookController = new BookController();
     private UserController userController = new UserController();
     private Scanner input = new Scanner(System.in);
 
+    /**
+     * Shows a list of all available commands, gets the user's info and passes it to the {@link #menuHandler}
+     */
     public void run(){
         showMenu(userController.getCommandsList());
         System.out.print(">");
         String command = input.nextLine();
-        MenuHandler(command);
+        menuHandler(command);
     }
 
+    /**
+     * View commands name passed to the method
+     * @param commandNames commands to show
+     */
     private void showMenu(CommandName[] commandNames) {
         for(CommandName name: commandNames) {
             System.out.println(name);
         }
     }
 
-    private void MenuHandler(String command) {
+    /**
+     * Handles user's command
+     * <p>
+     *     Extracts request parameters from the user's input, fills in a {@link by.bsuir.lab1.bean.Request}
+     *     and passes it to the controller to execute. In case of successful execution views either error message
+     *     or response message. In case of login or logout commands changes current user's role.
+     * </p>
+     * @param command user's command with parameters
+     */
+    private void menuHandler(String command) {
         String error;
         String commandName = command.trim();
         try {

@@ -1,7 +1,7 @@
 package by.bsuir.lab1.view;
 
 /**
- * Created by Maria Teseiko on 07.10.2015.
+ * Exception Thrown if any exception on current or any underlying level is thrown
  */
 public class ViewException extends Exception {
     public ViewException(String message) { super(message); }

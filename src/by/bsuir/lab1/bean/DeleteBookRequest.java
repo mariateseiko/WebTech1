@@ -1,7 +1,7 @@
 package by.bsuir.lab1.bean;
 
 /**
- * Created by Maria Teseiko on 10.10.2015.
+ * A request to delete a {@link by.bsuir.lab1.entity.Book} with a given ID from the repository
  */
 public class DeleteBookRequest extends Request{
     private int id;

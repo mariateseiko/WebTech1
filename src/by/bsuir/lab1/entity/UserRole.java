@@ -1,8 +1,11 @@
 package by.bsuir.lab1.entity;
 
 /**
- * Created by Maria Teseiko on 02.10.2015.
+ * All possible roles of the system's users.
+ *
+ * @see User
  */
+
 public enum UserRole {
     ADMIN, USER, GUEST
 }

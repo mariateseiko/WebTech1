@@ -1,7 +1,7 @@
 package by.bsuir.lab1.bean;
 
 /**
- * Created by Maria Teseiko on 10.10.2015.
+ * A response to {@link by.bsuir.lab1.bean.EditBookRequest}
  */
 public class EditBookResponse extends Response {
     private String resultMessage;
